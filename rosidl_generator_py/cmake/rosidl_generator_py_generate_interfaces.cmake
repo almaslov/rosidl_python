@@ -183,8 +183,14 @@ add_library(${_target_name_bases_lib} SHARED ${_generated_c_base_files})
 add_dependencies(
   ${_target_name_bases_lib}
   ${rosidl_generate_interfaces_TARGET}${_target_suffix})
-target_link_libraries(${_target_name_bases_lib} ${PythonExtra_LIBRARIES})
-target_include_directories(${_target_name_bases_lib} PRIVATE ${PythonExtra_INCLUDE_DIRS})
+target_link_libraries(${_target_name_bases_lib}
+  Python3::NumPy
+  Python3::Python
+)
+target_include_directories(${_target_name_bases_lib} PRIVATE
+  ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_c
+  ${CMAKE_CURRENT_BINARY_DIR}/rosidl_generator_py
+)
 
 set_target_properties(${_target_name_bases_lib} PROPERTIES
   COMPILE_OPTIONS "${_extension_compile_flags}"
